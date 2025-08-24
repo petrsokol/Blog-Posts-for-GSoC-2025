@@ -1,0 +1,3 @@
+It is now time to move to the final objective, and that is the implementation of the implicit solver as well as the addition of the viscous terms, which would enable us to solve the Navier-Stokes equations instead of the Euler equations.
+
+In order to properly parallelize the LU-SGS, we need to iterate over the domain in a way such that no two adjacent cells are processed at the same time, because that would lead to a race condition. This can be achived by "coloring" the mesh, so that no two cells which share an edge have the same color. In order to achive this, I wrote a python script to pre-process the mesh and add a field similar to CellEntityIDs, but this time with CellColors. 

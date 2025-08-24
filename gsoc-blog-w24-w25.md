@@ -1,0 +1,9 @@
+Weeks 24 and 25 plus the weeks prior to this were spent by learning to work with the TNL. Most things in TNL are done with parallel loops, which take a lambda function (a kernel) as an input. 
+
+The initial experiments were done by first loading a small and simple mesh and then iterating over its cells, points or edges (interfaces). A basic kernel would take the index as input and perform some operations with it, perhaps print the area of the current cell, print its neighbors and so on. This way, I would learn to combine my parallel loops and kernels with existing TNL functions, such as getEntityMeasure( const int cellIndex ), getNeighborsCount( const int cellIndex ), ...
+
+I also created a parametric mesh for testing my FVM solver. It is a 2D channel with a bump in the middle (GAMM channel), with inlet on the left and outlet on the right. I chose to go with the ghost cell approach, which means that the boundary conditions are realized through a layer of imaginary cells. These layers are distinguished from the rest by a cellEntityID, which I can store into a vector and then later access to perform actions on a certain subset of the computational domain (wall cells get different treatment than inner cells or inlet cells for example). 
+
+It became clear that it is benefitial to create vectors of cell indices corresponding to the different ghost cell sets, because then I could perform a parallel for loop over these cells only, instead of looping through all the cells and testing which satisfy the condition of being the correct cell ID. 
+
+At the end of week 25, I was able to load a mesh, read the cell IDs and create vectors each specific cell ID type (inner cell, inlet, outlet, wall). I started working on the fvm algorithm by preparing some fluid dynamics related functions. 
